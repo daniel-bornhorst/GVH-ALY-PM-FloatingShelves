@@ -112,7 +112,13 @@ uint32_t oldCardid1;
 uint32_t oldCardid2;
 
 void loop(void) {
+  nfc.begin();
+  delay(10);
+  nfc2.begin();
+  delay(10);
+  //Serial.println("Entering Loop 1");
   readerOneLoop();
+  //Serial.println("Entering Loop 2");
   readerTwoLoop();
 }
 
@@ -125,8 +131,9 @@ void readerOneLoop() {
   // Wait for an ISO14443A type cards (Mifare, etc.).  When one is found
   // 'uid' will be populated with the UID, and uidLength will indicate
   // if the uid is 4 bytes (Mifare Classic) or 7 bytes (Mifare Ultralight)
-  success = nfc.readPassiveTargetID(PN532_MIFARE_ISO14443A, uid, &uidLength);
-
+  //Serial.println("before NFC read loop 1");
+  success = nfc.readPassiveTargetID(PN532_MIFARE_ISO14443A, uid, &uidLength,50);
+  //Serial.println("After nfc read in loop 1");
   if (success) {
     // Display some basic information about the card
     // Serial.println("Found an ISO14443A card");
@@ -176,7 +183,9 @@ void readerTwoLoop() {
   // Wait for an ISO14443A type cards (Mifare, etc.).  When one is found
   // 'uid' will be populated with the UID, and uidLength will indicate
   // if the uid is 4 bytes (Mifare Classic) or 7 bytes (Mifare Ultralight)
-  success = nfc2.readPassiveTargetID(PN532_MIFARE_ISO14443A, uid, &uidLength);
+  //Serial.println("Before nfc read in loop 2");
+  success = nfc2.readPassiveTargetID(PN532_MIFARE_ISO14443A, uid, &uidLength,50);
+  //Serial.println("After nfc read in loop 2");
 
   if (success) {
     // Display some basic information about the card
