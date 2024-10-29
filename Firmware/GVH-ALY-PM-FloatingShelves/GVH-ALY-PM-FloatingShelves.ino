@@ -24,7 +24,8 @@
 // If using the breakout or shield with I2C, define just the pins connected
 // to the IRQ and reset lines.  Use the values below (2, 3) for the shield!
 #define PN532_IRQ   (2)
-#define PN532_RESET (3)  // Not connected by default on the NFC Shield
+#define PN532_RESET (22)  // Not connected by default on the NFC Shield
+#define PN532_RESET2 (21)  // Not connected by default on the NFC Shield
 
 #define PIXEL_PIN1   5
 #define PIXEL_PIN2   17
@@ -112,13 +113,10 @@ uint32_t oldCardid1;
 uint32_t oldCardid2;
 
 void loop(void) {
-  nfc.begin();
-  delay(10);
-  nfc2.begin();
-  delay(10);
-  //Serial.println("Entering Loop 1");
+  nfc.wakeup();
   readerOneLoop();
-  //Serial.println("Entering Loop 2");
+
+  nfc2.wakeup();
   readerTwoLoop();
 }
 
